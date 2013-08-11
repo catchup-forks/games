@@ -31,7 +31,19 @@ class GameModel extends GamesModel
    {
       parent::__construct('Game');
    }
-   
+
+
+
+   public function GameQuery()
+   {
+      $this->SQL
+         ->Select('g.*')
+         ->From('games g');
+   }
+
+
+
+
    /**
     * Get list of all pages.
     *
@@ -47,7 +59,65 @@ class GameModel extends GamesModel
       
       return $GameData;
    }
+
+
+
+
+   /*
+    * @return Gdn_DataSet
+    */
+   public function GetWhere($Where = FALSE, $OrderFields = '', $OrderDirection = NULL, $Limit = FALSE, $Offset = FALSE) {
+      $this->GameQuery();
+      
+      if ($Where !== FALSE)
+         $this->SQL->Where($Where);
+
+	if ($OrderDirection == 'NULL')
+		$OrderDirection = "ASC";
+
+
+
+	 if ($OrderFields != '')
+         $this->SQL->OrderBy($OrderFields, $OrderDirection);
+
+      if ($Limit !== FALSE) {
+         if ($Offset == FALSE || $Offset < 0)
+            $Offset = 0;
+
+         $this->SQL->Limit($Limit, $Offset);
+      }
+
+      $Result = $this->SQL->Get();
+      return $Result;
+   }
    
+   public function GetCount($Wheres = '') {
+      if (!is_array($Wheres))
+         $Wheres = array();
+
+      return $this->SQL
+         ->Select('g.gameid', 'count', 'CountGames')
+         ->From('games g')
+         ->Where($Wheres)
+         ->Get()
+         ->FirstRow()
+         ->CountGames;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    /**
     * Get data for a single page by ID.
     *

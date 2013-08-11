@@ -80,16 +80,19 @@ class GamesController extends Gdn_Controller {
 				
 		$SortField = 'gamename';
 		$ResultSet = $this->GameModel->GetWhere(FALSE, $SortField, NULL, $Limit, $Offset);
+
+
 		$this->SetData('Games', $ResultSet);
 
 		$NumResults = $this->GameModel->GetCount(FALSE);
-      $this->SetData('TotalAddons', $NumResults);
+
+		$this->SetData('TotalGames', $NumResults);
 		
 		// Build a pager
 		$PagerFactory = new Gdn_PagerFactory();
 		$Pager = $PagerFactory->GetPager('Pager', $this);
-		$Pager->MoreCode = '›';
-		$Pager->LessCode = '‹';
+		$Pager->MoreCode = '>>>›';
+		$Pager->LessCode = '‹<<<';
 		$Pager->ClientID = 'Pager';
 		$Pager->Configure(
 			$Offset,
