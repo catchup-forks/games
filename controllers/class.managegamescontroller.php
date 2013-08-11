@@ -1,6 +1,6 @@
 <?php if (!defined('APPLICATION')) exit();
 /**
- * Basic Pages - An application for Garden & Vanilla Forums.
+ * Basic Games - An application for Garden & Vanilla Forums.
  * Copyright (C) 2013  Livid Tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,11 +18,11 @@
  */
 
 /**
- * The PagesSettings controller.
+ * The GamesSettings controller.
  */
-class PagesSettingsController extends Gdn_Controller {
+class ManageGamesController extends Gdn_Controller {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array('PageModel', 'Form');
+   public $Uses = array('GameModel', 'Form');
    
    /**
     * Configures navigation sidebar in Dashboard.
@@ -49,44 +49,44 @@ class PagesSettingsController extends Gdn_Controller {
       // Check permission
       $this->Permission('Garden.Settings.Manage');
       
-      $this->View = 'allpages';
-      $this->AllPages();
+      $this->View = 'allgames';
+      $this->AllGames();
    }
    
    /**
-    * Loads view with list of all pages.
+    * Loads view with list of all games.
     */
-   public function AllPages() {
+   public function AllGames() {
       // Check permission
       $this->Permission('Garden.Settings.Manage');
       
-      // Get page data
-      $this->SetData('PageData', $this->PageModel->GetAll());
+      // Get game data
+      $this->SetData('GameData', $this->GameModel->GetAll());
       
-      $this->AddSideMenu('pagessettings/allpages');
-      $this->Title(T('BasicPages.Settings.AllPages', 'All Pages'));
+      $this->AddSideMenu('managegames/allgames');
+      $this->Title(T('GamerPortal.Settings.AllGames', 'All Games'));
       $this->Render();
    }
    
    /**
-    * Loads view for creating a new page.
+    * Loads view for creating a new game.
     *
-    * @param object $Page; Not NULL when editing a valid page.
+    * @param object $Game; Not NULL when editing a valid game.
     */
-   public function NewPage($Page = NULL) {
+   public function NewGame($Game = NULL) {
       // Check permission
       $this->Permission('Garden.Settings.Manage');
       
       $this->AddJsFile('jquery-ui.js');
       $this->AddJsFile('jquery.autogrow.js');
-      $this->AddJsFile('pagessettings-newpage.js');
+      $this->AddJsFile('managegames-newgame.js');
       
       // Temporary Fix for loading ButtonBar CSS file if ButtonBar is enabled.
       if(Gdn::PluginManager()->CheckPlugin('ButtonBar'))
          $this->AddCssFile('buttonbar.css', 'plugins/ButtonBar');
       
       // Prep Model
-      $this->Form->SetModel($this->PageModel);
+      $this->Form->SetModel($this->GameModel);
       
       // Define route variables.
       $RouteExpressionSuffix = '(/.*)?$';
@@ -97,13 +97,13 @@ class PagesSettingsController extends Gdn_Controller {
          // Prep form with current data for editing
          $FormValues = $this->Form->FormValues();
          
-         if(isset($Page)) {
-            $this->Form->SetData($Page);
+         if(isset($Game)) {
+            $this->Form->SetData($Game);
             $this->Form->AddHidden('UrlCodeIsDefined', '1');
             
-            if(Gdn::Router()->MatchRoute($Page->UrlCode . $RouteExpressionSuffix)) {
-               $this->Form->SetValue('HidePageFromURL', '1');
-               $this->Form->SetFormValue('HidePageFromURL', '1');
+            if(Gdn::Router()->MatchRoute($Game->UrlCode . $RouteExpressionSuffix)) {
+               $this->Form->SetValue('HideGameFromURL', '1');
+               $this->Form->SetFormValue('HideGameFromURL', '1');
             }
          } else {
             $this->Form->AddHidden('UrlCodeIsDefined', '0');
@@ -112,16 +112,16 @@ class PagesSettingsController extends Gdn_Controller {
          // Form was submitted.
          $FormValues = $this->Form->FormValues();
          
-         if(isset($Page)) {
-            $FormValues['PageID'] = $Page->PageID;
-            $this->Form->SetFormValue('PageID', $Page->PageID);
+         if(isset($Game)) {
+            $FormValues['GameID'] = $Game->gameid;
+            $this->Form->SetFormValue('GameID', $Game->gameid);
          }
          
          // Validate form values.
          if($FormValues['Name'] == '')
-            $this->Form->AddError(T('BasicPages.Settings.NewPage.ErrorName', 'Page title is required.'), 'Name');
+            $this->Form->AddError(T('GamerPortal.Settings.NewGame.ErrorName', 'Game title is required.'), 'Name');
          if($FormValues['Body'] == '')
-            $this->Form->AddError(T('BasicPages.Settings.NewPage.ErrorBody', 'Page body is required.'), 'Body');
+            $this->Form->AddError(T('GamerPortal.Settings.NewGame.ErrorBody', 'Game body is required.'), 'Body');
          
          // Validate UrlCode.
          if($FormValues['UrlCode'] == '')
@@ -130,49 +130,49 @@ class PagesSettingsController extends Gdn_Controller {
          $this->Form->SetFormValue('UrlCode', $FormValues['UrlCode']);
          
          $SQL = Gdn::Database()->SQL();
-         // Check if editing and if slug is same as one currently set in PageID.
-         $ValidPageID = $SQL
+         // Check if editing and if slug is same as one currently set in GameID.
+         $ValidGameID = $SQL
             ->Select('p.UrlCode')
-            ->From('Page p')
-            ->Where('p.PageID', $Page->PageID)
+            ->From('Game p')
+            ->Where('p.GameID', $Game->gameid)
             ->Get()->FirstRow();
-         // Make sure that the UrlCode is unique among pages.
+         // Make sure that the UrlCode is unique among games.
          $InvalidUrlCode = $SQL
-            ->Select('p.PageID')
-            ->From('Page p')
+            ->Select('p.GameID')
+            ->From('Game p')
             ->Where('p.UrlCode', $FormValues['UrlCode'])
             ->Get()
             ->NumRows();
-         if(($InvalidUrlCode && ($ValidPageID->UrlCode != $FormValues['UrlCode']))
-               || ((!isset($Page) && $InvalidUrlCode)))
-            $this->Form->AddError(T('BasicPages.Settings.NewPage.ErrorUrlCode', 'The specified URL code is already in use by another page.'), 'UrlCode');
+         if(($InvalidUrlCode && ($ValidGameID->UrlCode != $FormValues['UrlCode']))
+               || ((!isset($Game) && $InvalidUrlCode)))
+            $this->Form->AddError(T('GamerPortal.Settings.NewGame.ErrorUrlCode', 'The specified URL code is already in use by another game.'), 'UrlCode');
          
          // If all form values are validated.
          if($this->Form->ErrorCount() == 0) {
-            $PageID = $this->PageModel->Save($FormValues);
+            $GameID = $this->GameModel->Save($FormValues);
             
-            $ValidationResults = $this->PageModel->ValidationResults();
+            $ValidationResults = $this->GameModel->ValidationResults();
             $this->Form->SetValidationResults($ValidationResults);
             
             // Create and clean up routes for UrlCode.
-            if($Page->UrlCode != $FormValues['UrlCode']) {
-               if(Gdn::Router()->MatchRoute($Page->UrlCode . $RouteExpressionSuffix))
-                  Gdn::Router()->DeleteRoute($Page->UrlCode . $RouteExpressionSuffix);
+            if($Game->UrlCode != $FormValues['UrlCode']) {
+               if(Gdn::Router()->MatchRoute($Game->UrlCode . $RouteExpressionSuffix))
+                  Gdn::Router()->DeleteRoute($Game->UrlCode . $RouteExpressionSuffix);
             }
-            if($FormValues['HidePageFromURL'] == '1'
+            if($FormValues['HideGameFromURL'] == '1'
                   && !Gdn::Router()->MatchRoute($FormValues['UrlCode'] . $RouteExpressionSuffix)) {
                Gdn::Router()->SetRoute(
                   $FormValues['UrlCode'] . $RouteExpressionSuffix,
-                  'page/' . $FormValues['UrlCode'] . $RouteTargetSuffix,
+                  'game/' . $FormValues['UrlCode'] . $RouteTargetSuffix,
                   'Internal'
                );
-            } elseif($FormValues['HidePageFromURL'] == '0'
+            } elseif($FormValues['HideGameFromURL'] == '0'
                         && Gdn::Router()->MatchRoute($FormValues['UrlCode'] . $RouteExpressionSuffix)) {
                Gdn::Router()->DeleteRoute($FormValues['UrlCode'] . $RouteExpressionSuffix);
             }
             
             if ($this->DeliveryType() == DELIVERY_TYPE_ALL)
-               Redirect('pagessettings/allpages#Page_' . $PageID);
+               Redirect('managegames/allgames#Game_' . $GameID);
          }
       }
       
@@ -181,68 +181,68 @@ class PagesSettingsController extends Gdn_Controller {
          $this->AddSideMenu();
          $this->Title($this->Data('Title'));
       } else {
-         $this->AddSideMenu('pagessettings/newpage');
-         $this->Title(T('BasicPages.Settings.NewPage', 'New Page'));
+         $this->AddSideMenu('managegames/newgame');
+         $this->Title(T('GamerPortal.Settings.NewGame', 'New Game'));
       }
       $this->Render();
    }
    
    /**
-    * Wrapper for the NewPage view.
+    * Wrapper for the NewGame view.
     *
-    * @param int $PageID; Page ID for getting page data.
+    * @param int $GameID; Game ID for getting game data.
     */
-   public function EditPage($PageID = NULL) {
+   public function EditGame($GameID = NULL) {
       // Check permission
       $this->Permission('Garden.Settings.Manage');
       
-      $Page = $this->PageModel->GetID($PageID);
-      if($Page != NULL) {
-         $this->View = 'newpage';
-         $this->Title(T('BasicPages.Settings.EditPage', 'Edit Page'));
-         $this->NewPage($Page);
+      $Game = $this->GameModel->GetID($GameID);
+      if($Game != NULL) {
+         $this->View = 'newgame';
+         $this->Title(T('GamerPortal.Settings.EditGame', 'Edit Game'));
+         $this->NewGame($Game);
          return NULL;
       }
       
-      throw new Exception(sprintf(T('%s Not Found'), T('Page')), 404);
+      throw new Exception(sprintf(T('%s Not Found'), T('Game')), 404);
       return NULL;
    }
    
    /**
-    * Loads view for deleting a page.
+    * Loads view for deleting a game.
     *
-    * @param int $PageID; Page ID for deleting page data.
+    * @param int $GameID; Game ID for deleting game data.
     */
-   public function DeletePage($PageID = NULL) {
+   public function DeleteGame($GameID = NULL) {
       // Check permission
       $this->Permission('Garden.Settings.Manage');
       
-      $Page = $this->PageModel->GetID($PageID);
-      if($Page != NULL) {
+      $Game = $this->GameModel->GetID($GameID);
+      if($Game != NULL) {
          // Form was submitted with OK
          if($this->Form->AuthenticatedPostBack()) {
-            $this->PageModel->Delete($PageID);
+            $this->GameModel->Delete($GameID);
             
             // Define route variables.
             $RouteExpressionSuffix = '(/.*)?$';
             
             // Clean up routes for UrlCode.
-            if(Gdn::Router()->MatchRoute($Page->UrlCode . $RouteExpressionSuffix))
-               Gdn::Router()->DeleteRoute($Page->UrlCode . $RouteExpressionSuffix);
+            if(Gdn::Router()->MatchRoute($Game->UrlCode . $RouteExpressionSuffix))
+               Gdn::Router()->DeleteRoute($Game->UrlCode . $RouteExpressionSuffix);
             
-            if($this->DeliveryType() == DELIVERY_TYPE_ALL) // Full Page
-               Redirect('pagessettings/allpages');
+            if($this->DeliveryType() == DELIVERY_TYPE_ALL) // Full Game
+               Redirect('managegames/allgames');
             elseif($this->DeliveryType() == DELIVERY_TYPE_VIEW) // Popup
-               $this->RedirectUrl = Url('pagessettings/allpages');
+               $this->RedirectUrl = Url('managegames/allgames');
          }
       
          $this->AddSideMenu();
-         $this->Title(T('BasicPages.Settings.DeletePage', 'Delete Page'));
+         $this->Title(T('GamerPortal.Settings.DeleteGame', 'Delete Game'));
          $this->Render();
          return NULL;
       }
       
-      throw new Exception(sprintf(T('%s Not Found'), T('Page')), 404);
+      throw new Exception(sprintf(T('%s Not Found'), T('Game')), 404);
       return NULL;
    }
    

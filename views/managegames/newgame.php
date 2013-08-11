@@ -1,6 +1,6 @@
 <?php if (!defined('APPLICATION')) exit();
 /**
- * Basic Pages - An application for Garden & Vanilla Forums.
+ * Basic Games - An application for Garden & Vanilla Forums.
  * Copyright (C) 2013  Livid Tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,13 +25,13 @@ echo $this->Form->Errors();
 <ul>
    <li>
       <?php
-         echo $this->Form->Label(T('BasicPages.Settings.PageTitle', 'Page Title'), 'Name');
+         echo $this->Form->Label(T('GamersPortal.Settings.GameTitle', 'Game Title'), 'Name');
          echo $this->Form->TextBox('Name', array('maxlength' => 100, 'class' => 'InputBox'));
       ?>
    </li>
    <li id="UrlCode">
       <?php
-         echo Wrap(T('BasicPages.Settings.NewPage.PageUrl', 'Page URL:'), 'strong') . ' ';
+         echo Wrap(T('GamersPortal.Settings.NewGame.GameUrl', 'Game URL:'), 'strong') . ' ';
          echo Gdn::Request()->Url('page', TRUE);
          echo '/';
          echo Wrap(htmlspecialchars($this->Form->GetValue('UrlCode')));
@@ -42,21 +42,21 @@ echo $this->Form->Errors();
    </li>
    <li>
       <?php
-			echo $this->Form->Label(T('BasicPages.Settings.NewPage.PageBody', 'Page Body'), 'Body');
-         echo $this->Form->BodyBox('Body', array('Table' => 'Page'));
+			echo $this->Form->Label(T('GamersPortal.Settings.NewGame.GameBody', 'Game Body'), 'Body');
+         echo $this->Form->BodyBox('Body', array('Table' => 'Game'));
       ?>
    </li>
    <li>
-      <?php echo $this->Form->CheckBox('SiteMenuLink', T('BasicPages.Settings.NewPage.PageShowSiteMenuLink', 'Show header site menu link?')); ?>
+      <?php echo $this->Form->CheckBox('SiteMenuLink', T('GamersPortal.Settings.NewGame.GameShowSiteMenuLink', 'Show header site menu link?')); ?>
    </li>
    <li>
-      <?php echo $this->Form->CheckBox('HidePageFromURL', T('BasicPages.Settings.NewPage.PageHidePageFromURL', 'Remove "/page" from the URL?')); ?>
+      <?php echo $this->Form->CheckBox('HideGameFromURL', T('GamersPortal.Settings.NewGame.GameHideGameFromURL', 'Remove "/game" from the URL?')); ?>
    </li>
 </ul>
 <div class="Buttons">
    <?php
-      echo $this->Form->Button(T('BasicPages.Settings.NewPage.Save', 'Save'), array('class' => 'Button Primary'));
-      echo Anchor(T('BasicPages.Settings.Cancel', 'Cancel'), 'pagessettings/allpages', 'Button');
+      echo $this->Form->Button(T('GamersPortal.Settings.NewGame.Save', 'Save'), array('class' => 'Button Primary'));
+      echo Anchor(T('GamersPortal.Settings.Cancel', 'Cancel'), 'managegames/allgames', 'Button');
    ?>
 </div>
 <?php echo $this->Form->Close();

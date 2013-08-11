@@ -1,6 +1,6 @@
 <?php if (!defined('APPLICATION')) exit();
 /**
- * Basic Pages - An application for Garden & Vanilla Forums.
+ * Basic Games - An application for Garden & Vanilla Forums.
  * Copyright (C) 2013  Livid Tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,31 +18,31 @@
  */
 
 /**
- * The Page controller.
+ * The Game controller.
  */
-class PageController extends PagesController {
+class GameController extends GamesController {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array('PageModel');
+   public $Uses = array('GameModel');
    
    /**
     * Loads default page view.
     * 
-    * @param string $PageUrlCode; Unique page URL stub identifier.
+    * @param string $GameUrlCode; Unique page URL stub identifier.
     */
-   public function Index($PageUrlCode = '') {
-      $Page = $this->PageModel->GetUrlCode($PageUrlCode);
+   public function Index($GameUrlCode = '') {
+      $Game = $this->GameModel->GetByUrlCode($GameUrlCode);
       
       // If page doesn't exist.
-      if($Page == NULL) {
-         throw new Exception(sprintf(T('%s Not Found'), T('Page')), 404);
+      if($Game == NULL) {
+         throw new Exception(sprintf(T('%s Not Found'), T('Game')), 404);
          return NULL;
       }
       
       // Get page data.
-      $this->SetData('PageData', $Page);
+      $this->SetData('GameData', $Game);
       
       // Add description meta tag.
-      $this->Description(SliceParagraph(Gdn_Format::PlainText($Page->Body, $Page->Format), 160));
+      $this->Description(SliceParagraph(Gdn_Format::PlainText($Game->Body, $Game->Format), 160));
       
       // Add modules
       $this->AddModule('GuestModule');
@@ -57,10 +57,10 @@ class PageController extends PagesController {
       if (!$this->Data('Title')) {
          $Title = C('Garden.HomepageTitle');
          $DefaultControllerRoute = Gdn::Router()->GetRoute('DefaultController')['Destination'];
-         if($Title && (strpos($DefaultControllerRoute, 'page/' . $Page->UrlCode) !== FALSE))
+         if($Title && (strpos($DefaultControllerRoute, 'game/' . $Game->UrlCode) !== FALSE))
             $this->Title($Title, '');
          else
-            $this->Title($Page->Name);
+            $this->Title($Game->Name);
       }
       $this->Render();
    }

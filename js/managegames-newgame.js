@@ -17,7 +17,7 @@
  */
 
 jQuery(document).ready(function($) {
-   // Map plain text page name to url code.
+   // Map plain text game name to url code.
    $("#Form_Name").keyup(function(event) {
       if ($('#Form_UrlCodeIsDefined').val() == '0') {
          $('#UrlCode').show();
@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
       return false;
    });
    
-   // Attach autogrow function to page body textarea.
+   // Attach autogrow function to game body textarea.
    if ($.autogrow)
       $('textarea.TextBox').livequery(function() {
          $(this).autogrow();

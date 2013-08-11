@@ -44,25 +44,20 @@ $Validation = new Gdn_Validation(); // To validate permissions (if necessary).
  */
 
 // Construct the Page table.
-$Construct->Table('Page');
+$Construct->Table('games');
 
 $Construct
-   ->PrimaryKey('PageID')
-   ->Column('InsertUserID', 'int', FALSE, 'key')
-   ->Column('UpdateUserID', 'int', TRUE)
-   ->Column('Name', 'varchar(100)', FALSE, 'fulltext')
+   ->PrimaryKey('gameid')
+   ->Column('gamename', 'varchar(100)', FALSE, 'fulltext')
    ->Column('UrlCode', 'varchar(255)', TRUE)
    ->Column('Body', 'text', FALSE, 'fulltext')
    ->Column('Format', 'varchar(20)', TRUE)
    ->Column('DateInserted', 'datetime', FALSE, 'index')
    ->Column('DateUpdated', 'datetime', TRUE)
-   ->Column('InsertIPAddress', 'varchar(15)', TRUE)
-   ->Column('UpdateIPAddress', 'varchar(15)', TRUE)
-   ->Column('SiteMenuLink', 'tinyint(1)', '0')
    ->Set($Explicit, $Drop);
 
 // Set current Pages.Version
 $ApplicationInfo = array();
-include(CombinePaths(array(PATH_APPLICATIONS . DS . 'basicpages' . DS . 'settings' . DS . 'about.php')));
-$Version = ArrayValue('Version', ArrayValue('BasicPages', $ApplicationInfo, array()), 'Undefined');
-SaveToConfig('BasicPages.Version', $Version);
+include(CombinePaths(array(PATH_APPLICATIONS . DS . 'games' . DS . 'settings' . DS . 'about.php')));
+$Version = ArrayValue('Version', ArrayValue('GamersPortal', $ApplicationInfo, array()), 'Undefined');
+SaveToConfig('GamersPortal.Version', $Version);

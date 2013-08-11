@@ -16,19 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-?>
-<h1><?php echo $this->Data('Title'); ?></h1>
-<div class="Info">
-   <?php echo T('BasicPages.Settings.DeletePage.Notice', 'Are you sure you want to delete this page? This action cannot be undone.'); ?>
-</div>
-<?php
-echo $this->Form->Open();
-echo $this->Form->Errors();
-?>
-<div class="Buttons<?php if($this->DeliveryType() == DELIVERY_TYPE_VIEW) echo ' Footer'; // Popup ?>">
-   <?php
-      echo $this->Form->Button(T('BasicPages.Settings.DeletePage.OK', 'OK'), array('class' => 'Button Primary'));
-      echo Anchor(T('BasicPages.Settings.Cancel', 'Cancel'), 'pagessettings/allpages', 'Button');
-   ?>
-</div>
-<?php echo $this->Form->Close();
+
+/**
+ * GamersPortal Model
+ *
+ * Introduces common methods that child classes can use.
+ */
+abstract class GamesModel extends Gdn_Model {
+   /**
+    * Class constructor. Defines the related database table name.
+    * 
+    * @param string $Name Database table name.
+    */
+   public function __construct($Name = '') {
+      parent::__construct($Name);
+   }
+}

@@ -20,15 +20,14 @@
 /**
  * An associative array of information about this application.
  */
-$ApplicationInfo['BasicPages'] = array(
-   'Name' => 'Basic Pages',
-   'Description' => "Basic Pages is an application that provides a way for you to create basic public pages for static content in Garden.",
-   'Version' => '1.1',
-   'Author' => "Livid Tech",
-   'AuthorUrl' => 'http://lividtech.com/',
-   'Url' => 'http://vanillaforums.org/addon/basicpages-application',
-   'License' => 'GPLv3',
-   //'RequiredApplications' => array('Vanilla' => '2.0.18.8'),
+$ApplicationInfo['GamersPortal'] = array(
+   'Name' => 'GamersPortal',
+   'Description' => "",
+   'Version' => '0.1',
+   'Author' => "",
+   'AuthorUrl' => '',
+   'Url' => '',
+   'License' => '',
    'SetupController' => 'setup',
-   'SettingsUrl' => 'pagessettings/allpages'
+   'SettingsUrl' => 'managegames/allgames'
 );

@@ -1,6 +1,6 @@
 <?php if (!defined('APPLICATION')) exit();
 /**
- * Basic Pages - An application for Garden & Vanilla Forums.
+ * Basic Games - An application for Garden & Vanilla Forums.
  * Copyright (C) 2013  Livid Tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,11 +18,11 @@
  */
 
 /**
- * The Pages controller.
+ * The Games controller.
  *
  * Introduces common methods that child classes can use.
  */
-class PagesController extends Gdn_Controller {
+class GamesController extends Gdn_Controller {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
    public $Uses = array();
    

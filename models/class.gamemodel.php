@@ -1,6 +1,6 @@
 <?php if (!defined('APPLICATION')) exit();
 /**
- * Basic Pages - An application for Garden & Vanilla Forums.
+ * Basic Games - An application for Garden & Vanilla Forums.
  * Copyright (C) 2013  Livid Tech
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,107 +18,117 @@
  */
 
 /**
- * Page Model
+ * Game Model
  */
-class PageModel extends BasicPagesModel {
+class GameModel extends GamesModel
+{
    /**
     * Class constructor. Defines the related database table name.
     * 
     * @param string $Name Database table name.
     */
-   public function __construct() {
-      parent::__construct('Page');
+   public function __construct()
+   {
+      parent::__construct('Game');
    }
    
    /**
     * Get list of all pages.
     *
-    * @return object $PageData; SQL results.
+    * @return object $GameData; SQL results.
     */
-   public function GetAll() {
-      $PageData = $this->SQL
-         ->Select('p.*')
-         ->From('Page p')
-         ->OrderBy('Name', 'asc')
+   public function GetAll()
+   {
+      $GameData = $this->SQL
+         ->Select('g.*')
+         ->From('games g')
+         ->OrderBy('gamename', 'asc')
          ->Get();
       
-      return $PageData;
+      return $GameData;
    }
    
    /**
     * Get data for a single page by ID.
     *
-	 * @param int $PageID; Unique ID of page to get.
-	 * @return object $Page; SQL result.
+	 * @param int $GameID; Unique ID of page to get.
+	 * @return object $Game; SQL result.
 	 */
-   public function GetID($PageID) {
-      $Page = $this->SQL
-         ->Select('p.*')
-         ->From('Page p')
-         ->Where('p.PageID', $PageID)
+   public function GetID($GameID)
+   {
+      $Game = $this->SQL
+         ->Select('g.*')
+         ->From('games g')
+         ->Where('g.gameid', $GameID)
          ->Get()
          ->FirstRow();
       
-      if (!$Page)
+      if (!$Game)
          return NULL;
       
-		return $Page;
+		return $Game;
    }
    
    /**
     * Get data for a single page by UrlCode.
     *
 	 * @param int $UrlCode; Unique UrlCode of page to get.
-	 * @return object $Page; SQL result.
+	 * @return object $Game; SQL result.
 	 */
-   public function GetUrlCode($UrlCode) {
-      $Page = $this->SQL
-         ->Select('p.*')
-         ->From('Page p')
-         ->Where('p.UrlCode', $UrlCode)
+   public function GetByUrlCode($UrlCode)
+   {
+      $Game = $this->SQL
+         ->Select('g.*')
+         ->From('games g')
+         ->Where('g.UrlCode', $UrlCode)
          ->Get()
          ->FirstRow();
       
-      if (!$Page)
+      if (!$Game)
          return NULL;
 		
-		return $Page;
+		return $Game;
    }
    
    /**
     * Get list of all pages with SiteMenuLink column set to 1.
     *
 	 * @param int $UrlCode; Unique UrlCode of page to get.
-	 * @return object $Page; SQL result.
+	 * @return object $Game; SQL result.
 	 */
-   public function GetAllSiteMenuLink() {
-      $PageData = $this->SQL
-         ->Select('p.Name', '', 'Name')
-         ->Select('p.UrlCode', '', 'UrlCode')
-         ->From('Page p')
-         ->Where('p.SiteMenuLink', '1')
+   public function GetAllSiteMenuLink()
+   {
+      $GameData = $this->SQL
+         ->Select('g.gamename', '', 'Name')
+         ->Select('g.UrlCode', '', 'UrlCode')
+         ->From('games g')
+         ->Where('g.SiteMenuLink', '1')
          ->Get();
       
-      return $PageData;
+      return $GameData;
    }
    
    /**
     * Return a url for a page.
     *
-    * @param object $Page; Page object.
+    * @param object $Game; Game object.
     * @param object $WithDomain; Return with domain in URL.
     * @return string; The URL to the page.
     */
-   public static function PageUrl($Page, $WithDomain = TRUE) {
-      $Page = (array)$Page;
+   public static function GameUrl($Game, $WithDomain = TRUE)
+   {
+      $Game = (array)$Game;
       
       // Define route variables.
       $RouteExpressionSuffix = '(/.*)?$';
       
-      if(Gdn::Router()->MatchRoute($Page['UrlCode'] . $RouteExpressionSuffix)) {
-         $Result = rawurlencode($Page['UrlCode']);
-      } else {
-         $Result = '/page/' . rawurlencode($Page['UrlCode']);
+      if(Gdn::Router()->MatchRoute($Game['UrlCode'] . $RouteExpressionSuffix))
+	  {
+         $Result = rawurlencode($Game['UrlCode']);
+      }
+	  else
+	  {
+         $Result = '/game/' . rawurlencode($Game['UrlCode']);
       }
       return Url($Result, $WithDomain);
    }
