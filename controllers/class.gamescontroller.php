@@ -24,7 +24,7 @@
  */
 class GamesController extends Gdn_Controller {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array();
+   public $Uses = array('Form', 'GameModel');
    
    /**
     * Include JS, CSS, and modules used by all methods of this controller.
@@ -44,7 +44,66 @@ class GamesController extends Gdn_Controller {
       $this->AddCssFile('articles.css');
       
       parent::Initialize();
+      $this->AddCssFile('style.css');
+      $this->AddCssFile('games.css');
       
+      $this->CountCommentsPerPage = C('Vanilla.Comments.PerPage', 30);
 		$this->FireEvent('AfterInitialize');
    }
+
+
+
+   public function Index($ID = '')
+   {
+
+			$this->View = 'browse';
+			$this->Browse();
+			return;
+      
+		//$this->Render();
+   }
+
+	public function Browse($FilterToType = '', $Sort = '', $Page = '') {
+
+
+
+		$this->AddJsFile('/js/library/jquery.gardenmorepager.js');
+		$this->AddJsFile('browse.js');
+
+      list($Offset, $Limit) = OffsetLimit($Page, Gdn::Config('Garden.Search.PerPage', 20));
+		
+
+
+         $Title = 'Browse Games';
+      $this->SetData('Title', $Title);
+
+				
+		$SortField = 'gamename';
+		$ResultSet = $this->GameModel->GetWhere(FALSE, $SortField, NULL, $Limit, $Offset);
+		$this->SetData('Games', $ResultSet);
+
+		$NumResults = $this->GameModel->GetCount(FALSE);
+      $this->SetData('TotalAddons', $NumResults);
+		
+		// Build a pager
+		$PagerFactory = new Gdn_PagerFactory();
+		$Pager = $PagerFactory->GetPager('Pager', $this);
+		$Pager->MoreCode = '›';
+		$Pager->LessCode = '‹';
+		$Pager->ClientID = 'Pager';
+		$Pager->Configure(
+			$Offset,
+			$Limit,
+			$NumResults,
+			'games/browse/'.$Sort.'/%1$s/?Form/Keywords='.urlencode($Search)
+		);
+		$this->SetData('_Pager', $Pager);
+      
+      if ($this->_DeliveryType != DELIVERY_TYPE_ALL)
+         $this->SetJson('MoreRow', $Pager->ToString('more'));
+
+			$this->View = 'browse';
+		$this->Render();
+	}
+   
 }

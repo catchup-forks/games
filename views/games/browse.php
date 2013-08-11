@@ -17,14 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * The Game controller.
- */
-class GameController extends GamesController {
-   /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array('GameModel');
 
+?>
+<h1><?php echo $this->Data('Title'); ?></h1>
 
-
-
-}
