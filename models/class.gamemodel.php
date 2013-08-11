@@ -41,7 +41,9 @@ class GameModel extends GamesModel
          ->From('games g');
    }
 
-
+   public static function Slug($Game, $IncludeVersion = TRUE) {
+         return Gdn_Format::Url(GetValue('UrlCode', $Game));
+   }
 
 
    /**
@@ -66,7 +68,8 @@ class GameModel extends GamesModel
    /*
     * @return Gdn_DataSet
     */
-   public function GetWhere($Where = FALSE, $OrderFields = '', $OrderDirection = NULL, $Limit = FALSE, $Offset = FALSE) {
+   public function GetWhere($Where = FALSE, $OrderFields = '', $OrderDirection = NULL, $Limit = FALSE, $Offset = FALSE)
+   {
       $this->GameQuery();
       
       if ($Where !== FALSE)
@@ -80,12 +83,12 @@ class GameModel extends GamesModel
 	 if ($OrderFields != '')
          $this->SQL->OrderBy($OrderFields, $OrderDirection);
 
-      if ($Limit !== FALSE) {
-         if ($Offset == FALSE || $Offset < 0)
-            $Offset = 0;
+      //if ($Limit !== FALSE) {
+       //  if ($Offset == FALSE || $Offset < 0)
+      //      $Offset = 0;
 
          $this->SQL->Limit($Limit, $Offset);
-      }
+      //}
 
       $Result = $this->SQL->Get();
       return $Result;
@@ -154,8 +157,8 @@ class GameModel extends GamesModel
          ->Get()
          ->FirstRow();
       
-      if (!$Game)
-         return NULL;
+      //if (!$Game)
+         //return NULL;
 		
 		return $Game;
    }

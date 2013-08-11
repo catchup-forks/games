@@ -56,11 +56,50 @@ class GamesController extends Gdn_Controller {
    public function Index($ID = '')
    {
 
+		if ($ID != '')
+		{
+         $Game = $this->GameModel->GetByUrlCode($ID, TRUE);
+
+
+            $gameid = $Game->gameid;
+			$this->SetData('GameData', $Game);
+
+
+
+
+            //$Description = GetValue('Description', $Game);
+            //if ($Description) {
+            //   $this->Head->AddTag('meta', array('Name' => 'description', 'content' => Gdn_Format::PlainText($Description, FALSE)));
+            //}
+
+
+            $this->AddCssFile('popup.css');
+            $this->AddCssFile('fancyzoom.css');
+            $this->AddJsFile('fancyzoom.js');
+            $this->AddJsFile('game.js');
+
+
+
+
+            $this->View = 'gamedetail';
+				$this->Title($this->Data('gamename'));
+
+            // Set the canonical url.
+            $this->CanonicalUrl(Url('/game/'.GameModel::Slug($Addon, FALSE), TRUE));
+
+      }
+	  else
+	  {
+
 			$this->View = 'browse';
 			$this->Browse();
 			return;
+
+      }
+
+
       
-		//$this->Render();
+		$this->Render();
    }
 
 	public function Browse($FilterToType = '', $Sort = '', $Page = '') {
@@ -70,16 +109,24 @@ class GamesController extends Gdn_Controller {
 		$this->AddJsFile('/js/library/jquery.gardenmorepager.js');
 		$this->AddJsFile('browse.js');
 
-      list($Offset, $Limit) = OffsetLimit($Page, Gdn::Config('Garden.Search.PerPage', 20));
-		
 
+
+      list($Offset, $Limit) = OffsetLimit($Page, Gdn::Config('Garden.Search.PerPage', 10));
 
          $Title = 'Browse Games';
       $this->SetData('Title', $Title);
 
-				
+
+
+
 		$SortField = 'gamename';
+		//   public function GetWhere($Where = FALSE, $OrderFields = '', $OrderDirection = NULL, $Limit = FALSE, $Offset = FALSE)
 		$ResultSet = $this->GameModel->GetWhere(FALSE, $SortField, NULL, $Limit, $Offset);
+
+
+
+
+
 
 
 		$this->SetData('Games', $ResultSet);

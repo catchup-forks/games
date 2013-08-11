@@ -1,7 +1,7 @@
 <?php if (!defined('APPLICATION')) exit();
 
 function WriteGame($Game, $Alt) {
-   //$Url = '/game/'.GameModel::Slug($Game, FALSE);
+   $Url = '/game/'.GameModel::Slug($Game, FALSE);
 	?>
 	<li class="Item GameRow<?php echo $Alt; ?>">
 		<div class="ItemContent">

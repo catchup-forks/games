@@ -23,7 +23,7 @@ $Game = $this->Data('GameData');
 $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
 ?>
 <div id="Game_<?php echo $Game->gameid; ?>" class="Game-<?php echo $Game->UrlCode; ?>">
-   <?php if($Session->CheckPermission('Garden.Settings.Manage')): ?>
+
       <div class="Options">
          <span class="ToggleFlyout OptionsMenu">
             <span class="OptionsTitle" title="<?php echo T('Options'); ?>"><?php echo T('Options'); ?></span>
@@ -33,7 +33,12 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
             </ul>
          </span>
       </div>
-   <?php endif; ?>
-   <h1 class="H"><?php echo $this->Data('Title'); ?></h1>
+
+   <h1 class="H"><?php echo $Game->gamename; ?></h1>
+
    <div id="GameBody"><?php echo $FormatBody; ?></div>
+
+
+
+
 </div>
