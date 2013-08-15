@@ -20,7 +20,7 @@
 /**
  * Game Model
  */
-class GameModel extends GamesModel
+class GameModel extends Gdn_Model
 {
    /**
     * Class constructor. Defines the related database table name.

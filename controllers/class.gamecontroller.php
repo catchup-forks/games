@@ -22,9 +22,54 @@
  */
 class GameController extends GamesController {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array('GameModel');
+   public $Uses = array('GameModel', 'Form');
 
 
+   /**
+    * @var DiscussionModel 
+    */
+   public $GameModel;
+
+
+
+   public function Index($ID = '')
+   {
+
+
+         $Game = $this->GameModel->GetByUrlCode($ID, TRUE);
+
+
+            $gameid = $Game->gameid;
+			$this->SetData('GameData', $Game);
+
+
+
+
+            //$Description = GetValue('Description', $Game);
+            //if ($Description) {
+            //   $this->Head->AddTag('meta', array('Name' => 'description', 'content' => Gdn_Format::PlainText($Description, FALSE)));
+            //}
+
+
+            $this->AddCssFile('popup.css');
+            $this->AddCssFile('fancyzoom.css');
+            $this->AddJsFile('fancyzoom.js');
+            $this->AddJsFile('game.js');
+
+
+
+
+            $this->View = 'gamedetail';
+				$this->Title($this->Data('gamename'));
+
+            // Set the canonical url.
+            $this->CanonicalUrl(Url('/game/'.GameModel::Slug($Addon, FALSE), TRUE));
+
+
+
+      
+		$this->Render();
+   }
 
 
 }

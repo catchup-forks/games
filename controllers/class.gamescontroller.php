@@ -55,7 +55,7 @@ class GamesController extends Gdn_Controller {
 
    public function Index($ID = '')
    {
-
+/*
 		if ($ID != '')
 		{
          $Game = $this->GameModel->GetByUrlCode($ID, TRUE);
@@ -86,16 +86,16 @@ class GamesController extends Gdn_Controller {
 
             // Set the canonical url.
             $this->CanonicalUrl(Url('/game/'.GameModel::Slug($Addon, FALSE), TRUE));
-
-      }
-	  else
-	  {
+*/
+      //}
+	  //else
+	  //{
 
 			$this->View = 'browse';
 			$this->Browse();
 			return;
 
-      }
+      //}
 
 
       
@@ -112,6 +112,7 @@ class GamesController extends Gdn_Controller {
 
 
       list($Offset, $Limit) = OffsetLimit($Page, Gdn::Config('Garden.Search.PerPage', 10));
+      $Page = PageNumber($Offset, $Limit);
 
          $Title = 'Browse Games';
       $this->SetData('Title', $Title);
@@ -135,6 +136,7 @@ class GamesController extends Gdn_Controller {
 
 		$this->SetData('TotalGames', $NumResults);
 		
+
 		// Build a pager
 		$PagerFactory = new Gdn_PagerFactory();
 		$Pager = $PagerFactory->GetPager('Pager', $this);
@@ -145,12 +147,48 @@ class GamesController extends Gdn_Controller {
 			$Offset,
 			$Limit,
 			$NumResults,
-			'games/browse/'.$Sort.'/%1$s/?Form/Keywords='.urlencode($Search)
+			'games/browse/'.$Sort.'/%1$s'
 		);
 		$this->SetData('_Pager', $Pager);
-      
-      if ($this->_DeliveryType != DELIVERY_TYPE_ALL)
+      if (!$this->Data('_PagerUrl'))
+         $this->SetData('_PagerUrl', 'games/browse/{Page}');
+      $this->SetData('_Page', $Page);
+      $this->SetData('_Limit', $Limit);
+		$this->FireEvent('AfterBuildPager');
+
+
+
+/*
+      // Build a pager
+      $PagerFactory = new Gdn_PagerFactory();
+		$this->EventArguments['PagerType'] = 'Pager';
+		$this->FireEvent('BeforeBuildPager');
+      $this->Pager = $PagerFactory->GetPager($this->EventArguments['PagerType'], $this);
+      $this->Pager->ClientID = 'Pager';
+      $this->Pager->Configure(
+         $Offset,
+         $Limit,
+         $NumResults,
+         'games/browse/%1$s'.$Sort
+      );
+      if (!$this->Data('_PagerUrl'))
+         $this->SetData('_PagerUrl', 'games/browse/{Page}');
+      $this->SetData('_Page', $Page);
+      $this->SetData('_Limit', $Limit);
+		$this->FireEvent('AfterBuildPager');
+*/
+
+
+
+
+
+
+
+
+		/*
+		if ($this->_DeliveryType != DELIVERY_TYPE_ALL)
          $this->SetJson('MoreRow', $Pager->ToString('more'));
+		*/
 
 			$this->View = 'browse';
 		$this->Render();
