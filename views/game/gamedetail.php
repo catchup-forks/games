@@ -20,9 +20,13 @@
 $Session = Gdn::Session();
 
 $Game = $this->Data('GameData');
+
+
+
+
 $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
 ?>
-<div id="Game_<?php echo $Game->gameid; ?>" class="Game-<?php echo $Game->UrlCode; ?>">
+<div id="Game_<?php echo $Game->gameid; ?>" class="Game-<?php echo $Game->zipname; ?>">
 
 	<div class="col-lg-3 panel">
 		<div class="Photo PhotoWrap PhotoWrapLarge Online Rank-Mod">
@@ -68,38 +72,39 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
               <dl class="About">
                 <dt class="Name">Gamename</dt>
                 <dd class="Name" itemprop="gamename"><?php echo $Game->gamename; ?></dd>
-                <dt class="Developer">Developer</dt>
-                <dd class="Developer" itemprop="developer"><span class="Developer"><?php echo $Game->gamename; ?></span></dd>
-                <dt class="DateAdded">DateAdded</dt>
-                <dd class="DateAdded"><?php echo $Game->gamename; ?></dd>
-                <dt class="Visits">Hits</dt>
-                <dd class="Visits"><?php echo $Game->gamename; ?></dd>
-                <dt class="LastUpdated">Last Updated</dt>
-                <dd class="LastActive"><?php echo $Game->gamename; ?></dd>
                 <dt class="Platforms">Platforms</dt>
-                <dd class="Platforms"><?php echo $Game->gamename; ?>, Platform, Platform, Platform</dd>
+                <dd class="Platforms"><?php echo $Game->platform; ?>, Platform, Platform, Platform</dd>
+                <dt class="Genre">Genre</dt>
+                <dd class="Genre"><?php echo $Game->gamecatid; ?></dd>
+                <dt class="Developer">Developer</dt>
+                <dd class="Developer" itemprop="developer"><span class="Developer"><?php echo $Game->developer; ?></span></dd>
                 <dt class="Publisher">Publisher</dt>
-                <dd class="Publisher"><?php echo $Game->gamename; ?></dd>
-                <dt class="IP">Register IP</dt>
-                <dd class="IP">n/a</dd>
-                <dt class="IP">Last IP</dt>
-                <dd class="IP">&nbsp;</dd>
+                <dd class="Publisher"><?php echo $Game->publisher; ?></dd>
+                <dt class="DateAdded">DateAdded</dt>
+                <dd class="DateAdded"><?php echo Gdn_Format::Date($Game->dateinserted); ?></dd>
+                <dt class="LastUpdated">Last Updated</dt>
+                <dd class="LastActive"><?php echo Gdn_Format::Date($Game->dateupdated); ?></dd>
+                <dt class="Visits">Hits</dt>
+                <dd class="Visits"><?php echo $Game->hits; ?></dd>
                 <dt class="Badges">Badges</dt>
                 <dd class="Badges">28</dd>
               </dl>
             </div>
+
             <div class="ReactionsWrap">
               <h2 class="H">Reactions</h2>
-              <div class="DataCounts">
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=promote" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span><span class="CountLabel">Videos</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=insightful" class="TextColor"><span class="CountTotal"><span title="114">114</span></span><span class="CountLabel">Reviews</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=awesome" class="TextColor"><span class="CountTotal"><span title="383">383</span></span> <span class="CountLabel">Previews</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=lol" class="TextColor"> <span class="CountTotal"><span title="55">55</span></span> <span class="CountLabel">News</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=spam" class="TextColor"> <span class="CountTotal"><span title="3">3</span></span> <span class="CountLabel">Links</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=abuse" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span> <span class="CountLabel">Comments</span></a></span></span>
-			  </div>
-            </div>
-          </div>
+				<ul class="nav nav-pills">
+				  <li class="active">
+					<a href="#">GameInfo</a>
+				  </li>
+				<li>114 Reviews</li>
+				<li>383 News</li>
+				<li>55 Previews</li>
+				<li>3 Links</li>
+				<li>5 Comments</li>
+				<li>5 Videos</li>
+				</ul>
+			</div>
 
           <div class="DataListWrap">
             <h2 class="H">Activity</h2>

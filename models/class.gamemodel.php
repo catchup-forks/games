@@ -42,7 +42,7 @@ class GameModel extends Gdn_Model
    }
 
    public static function Slug($Game, $IncludeVersion = TRUE) {
-         return Gdn_Format::Url(GetValue('UrlCode', $Game));
+         return Gdn_Format::Url(GetValue('zipname', $Game));
    }
 
 
@@ -143,9 +143,9 @@ class GameModel extends Gdn_Model
    }
    
    /**
-    * Get data for a single page by UrlCode.
+    * Get data for a single page by zipname.
     *
-	 * @param int $UrlCode; Unique UrlCode of page to get.
+	 * @param int $zipname; Unique zipname of page to get.
 	 * @return object $Game; SQL result.
 	 */
    public function GetByUrlCode($UrlCode)
@@ -153,7 +153,7 @@ class GameModel extends Gdn_Model
       $Game = $this->SQL
          ->Select('g.*')
          ->From('games g')
-         ->Where('g.UrlCode', $UrlCode)
+         ->Where('g.zipname', $UrlCode)
          ->Get()
          ->FirstRow();
       
@@ -166,14 +166,14 @@ class GameModel extends Gdn_Model
    /**
     * Get list of all pages with SiteMenuLink column set to 1.
     *
-	 * @param int $UrlCode; Unique UrlCode of page to get.
+	 * @param int $zipname; Unique zipname of page to get.
 	 * @return object $Game; SQL result.
 	 */
    public function GetAllSiteMenuLink()
    {
       $GameData = $this->SQL
          ->Select('g.gamename', '', 'Name')
-         ->Select('g.UrlCode', '', 'UrlCode')
+         ->Select('g.zipname', '', 'zipname')
          ->From('games g')
          ->Where('g.SiteMenuLink', '1')
          ->Get();
@@ -195,13 +195,13 @@ class GameModel extends Gdn_Model
       // Define route variables.
       $RouteExpressionSuffix = '(/.*)?$';
       
-      if(Gdn::Router()->MatchRoute($Game['UrlCode'] . $RouteExpressionSuffix))
+      if(Gdn::Router()->MatchRoute($Game['zipname'] . $RouteExpressionSuffix))
 	  {
-         $Result = rawurlencode($Game['UrlCode']);
+         $Result = rawurlencode($Game['zipname']);
       }
 	  else
 	  {
-         $Result = '/game/' . rawurlencode($Game['UrlCode']);
+         $Result = '/game/' . rawurlencode($Game['zipname']);
       }
       return Url($Result, $WithDomain);
    }

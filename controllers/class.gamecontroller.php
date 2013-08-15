@@ -46,11 +46,12 @@ class GameController extends GamesController {
 			 $this->SetData('Discussion', $this->DiscussionModel->GetID($DiscussionID), TRUE);
 		*/
 			 
-		  /*
-		  if(!is_object($this->Game)) {
+
+		  if(!isset($ID))
+		  {
 			 throw new Exception(sprintf(T('%s Not Found'), T('Game')), 404);
 		  }
-		  */
+
 
 		 $gameid = $Game->gameid;
 		$this->SetData('GameData', $Game);

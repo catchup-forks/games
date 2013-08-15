@@ -11,23 +11,23 @@ function WriteGame($Game, $Alt) {
 			<div class="Meta">
 				<span class="Platform">
 				Platform
-				<span><?php echo $Game->Platform; ?></span>
+				<span><?php echo $Game->platform; ?></span>
 				</span>
 				<span class="Publisher">
 				Publisher
-				<span><?php echo $Game->Publisher; ?></span>
+				<span><?php echo $Game->publisher; ?></span>
 				</span>
 				<span class="Developer">
 				Developer
-				<span><?php echo $Game->Developer; ?></span>
+				<span><?php echo $Game->developer; ?></span>
 				</span>
 				<span class="Hits">
 				Hits
-				<span><?php echo number_format($Game->Hits); ?></span>
+				<span><?php echo number_format($Game->hits); ?></span>
 				</span>
 				<span class="Updated">
 				Updated
-				<span><?php echo Gdn_Format::Date($Game->DateUpdated); ?></span>
+				<span><?php echo Gdn_Format::Date($Game->dateupdated); ?></span>
 				</span>
 			</div>
 		</div>
