@@ -102,7 +102,7 @@ class GamesController extends Gdn_Controller {
 		$this->Render();
    }
 
-	public function Browse($FilterToType = '', $Sort = '', $Page = '') {
+	public function Browse($Sort = '', $Page = '') {
 
 
 
@@ -114,7 +114,11 @@ class GamesController extends Gdn_Controller {
       list($Offset, $Limit) = OffsetLimit($Page, Gdn::Config('Garden.Search.PerPage', 10));
       $Page = PageNumber($Offset, $Limit);
 
-         $Title = 'Browse Games';
+
+
+
+
+	  $Title = 'Browse Games';
       $this->SetData('Title', $Title);
 
 
