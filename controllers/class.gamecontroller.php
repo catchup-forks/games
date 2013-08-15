@@ -39,8 +39,21 @@ class GameController extends GamesController {
          $Game = $this->GameModel->GetByUrlCode($ID, TRUE);
 
 
-            $gameid = $Game->gameid;
-			$this->SetData('GameData', $Game);
+		/*		 
+		 // Load the discussion record
+		  $DiscussionID = (is_numeric($DiscussionID) && $DiscussionID > 0) ? $DiscussionID : 0;
+		  if (!array_key_exists('Discussion', $this->Data))
+			 $this->SetData('Discussion', $this->DiscussionModel->GetID($DiscussionID), TRUE);
+		*/
+			 
+		  /*
+		  if(!is_object($this->Game)) {
+			 throw new Exception(sprintf(T('%s Not Found'), T('Game')), 404);
+		  }
+		  */
+
+		 $gameid = $Game->gameid;
+		$this->SetData('GameData', $Game);
 
 
 

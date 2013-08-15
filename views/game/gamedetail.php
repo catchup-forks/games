@@ -63,9 +63,8 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
 		</div>
         <div class="Profile">
           <div class="User" itemscope="" itemtype="http://schema.org/Person">
-            <h1 class="H"><?php echo $Game->gamename; ?></h1>
+            <h1 class="H well"><?php echo $Game->gamename; ?></h1>
             <div class="About P">
-              <h2 class="H">About</h2>
               <dl class="About">
                 <dt class="Name">Gamename</dt>
                 <dd class="Name" itemprop="gamename"><?php echo $Game->gamename; ?></dd>
@@ -92,27 +91,16 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
             <div class="ReactionsWrap">
               <h2 class="H">Reactions</h2>
               <div class="DataCounts">
-				<span class="CountItemWrap">
-					<span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=promote" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span>
-					<span class="CountLabel">Promote</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=insightful" class="TextColor">
-				<span class="CountTotal"><span title="114">114</span></span>
-				<span class="CountLabel">Insightful</span></a></span></span>
-				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=awesome" class="TextColor">
-				<span class="CountTotal"><span title="383">383</span></span> <span class="CountLabel">Awesome</span></a></span></span> <span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=lol" class="TextColor"> <span class="CountTotal"><span title="55">55</span></span> <span class="CountLabel">LOL</span></a></span></span> <span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=spam" class="TextColor"> <span class="CountTotal"><span title="3">3</span></span> <span class="CountLabel">Spam</span></a></span></span> <span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=abuse" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span> <span class="CountLabel">Abuse</span></a></span></span> </div>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=promote" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span><span class="CountLabel">Videos</span></a></span></span>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=insightful" class="TextColor"><span class="CountTotal"><span title="114">114</span></span><span class="CountLabel">Reviews</span></a></span></span>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=awesome" class="TextColor"><span class="CountTotal"><span title="383">383</span></span> <span class="CountLabel">Previews</span></a></span></span>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=lol" class="TextColor"> <span class="CountTotal"><span title="55">55</span></span> <span class="CountLabel">News</span></a></span></span>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=spam" class="TextColor"> <span class="CountTotal"><span title="3">3</span></span> <span class="CountLabel">Links</span></a></span></span>
+				<span class="CountItemWrap"><span class="CountItem"><a href="/profile/reactions/18261/UnderDog?reaction=abuse" class="TextColor"> <span class="CountTotal"><span title="5">5</span></span> <span class="CountLabel">Comments</span></a></span></span>
+			  </div>
             </div>
           </div>
-          <div class="BoxFilter BoxProfileFilter">
-            <ul class="FilterMenu">
-              <li class="Active Activity"><a href="/profile/activity/"><span class="Sprite SpActivity"></span> Activity</a></li>
-              <li class="Notifications"><a href="/profile/notifications"><span class="Sprite SpNotifications"></span> Notifications</a></li>
-              <li class="Discussions"><a href="/profile/discussions/18261/UnderDog"><span class="Sprite SpDiscussions"></span> Discussions<span class="Aside"> <span class="Count">69</span></span></a></li>
-              <li class="Comments"><a href="/profile/comments/18261/UnderDog"><span class="Sprite SpComments"></span> Comments<span class="Aside"> <span class="Count">2017</span></span></a></li>
-              <li class="Inbox"><a href="/messages/all"><span class="Sprite SpInbox"></span> Inbox</a></li>
-              <li><a href="/profile/addons/18261/UnderDog">Addons</a></li>
-              <li class="Warnings"><a href="/profile/warnings/18261/UnderDog"><span class="Sprite SpWarn"></span> Warnings</a></li>
-            </ul>
-          </div>
+
           <div class="DataListWrap">
             <h2 class="H">Activity</h2>
             <form method="post" action="/activity/post/18261?Target=%2Fprofile%2F18261%2FUnderDog" class="Activity">

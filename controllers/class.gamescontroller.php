@@ -102,7 +102,7 @@ class GamesController extends Gdn_Controller {
 		$this->Render();
    }
 
-	public function Browse($Sort = '', $Page = '') {
+	public function Browse($Page = '') {
 
 
 
@@ -151,7 +151,7 @@ class GamesController extends Gdn_Controller {
 			$Offset,
 			$Limit,
 			$NumResults,
-			'games/browse/'.$Sort.'/%1$s'
+			'games/browse/%1$s'
 		);
 		$this->SetData('_Pager', $Pager);
       if (!$this->Data('_PagerUrl'))
