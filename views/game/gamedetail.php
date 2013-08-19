@@ -21,6 +21,10 @@ $Session = Gdn::Session();
 
 $Game = $this->Data('GameData');
 
+$Genre = $this->Data('GenreData');
+
+
+
 
 
 
@@ -75,7 +79,10 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
                 <dt class="Platforms">Platforms</dt>
                 <dd class="Platforms"><?php echo $Game->platform; ?>, Platform, Platform, Platform</dd>
                 <dt class="Genre">Genre</dt>
-                <dd class="Genre"><?php echo $Game->gamecatid; ?></dd>
+                <dd class="Genre"><?php 
+				echo Anchor(htmlspecialchars($Genre['name']), "#");
+				?>
+				</dd>
                 <dt class="Developer">Developer</dt>
                 <dd class="Developer" itemprop="developer"><span class="Developer"><?php echo $Game->developer; ?></span></dd>
                 <dt class="Publisher">Publisher</dt>
@@ -103,8 +110,8 @@ $FormatBody = Gdn_Format::To($Game->Body, $Game->Format);
 				<li>3 Links</li>
 				<li>5 Comments</li>
 				<li>5 Videos</li>
-				</ul>
-			</div>
+				</ul><!-- /nav-pills -->
+			</div><!-- /ReactionsWrap -->
 
           <div class="DataListWrap">
             <h2 class="H">Activity</h2>

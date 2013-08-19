@@ -22,7 +22,7 @@
  */
 class GameController extends GamesController {
    /** @var array List of objects to prep. They will be available as $this->$Name. */
-   public $Uses = array('GameModel', 'Form');
+   public $Uses = array('GameModel', 'GenreModel', 'Form');
 
 
    /**
@@ -57,6 +57,45 @@ class GameController extends GamesController {
 		$this->SetData('GameData', $Game);
 
 
+/*
+[gameid] => 12071
+[platformid] => 10
+[gamecatid] => 9991
+[zipname] => zzyzzyxx
+[gamename] => Zzyzzyxx
+[publisherid] => 1
+[publisher] => Unknown
+[s_publisher] => 
+[developerid] => 1
+[developer] => Unknown
+[datestring] => 1983
+[dateinserted] => 2000-01-01
+[dateupdated] => 0000-00-00
+[description] => Collect gifts for your sweetie and reach her at the top. Known as \"Brix\" <br />
+prior to the Cinematronics release.
+*/
+
+
+
+			$this->SetData('GenreID', $this->genreid = $this->GameData->gamecatid, TRUE);
+		  //$this->SetData('Breadcrumbs', GenreModel::GetAncestors($this->GenreID));
+      
+
+			$Genre = GenreModel::Genres($Game->gamecatid);
+
+
+
+
+
+
+
+
+
+			/*
+			  if ($GenreCssClass = GetValue('CssClass', $Genre))
+				 Gdn_Theme::Section($GenreCssClass);
+		*/
+			$this->SetData('GenreData', $Genre);
 
 
             //$Description = GetValue('Description', $Game);
